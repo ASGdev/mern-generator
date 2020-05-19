@@ -1,0 +1,30 @@
+{
+  "app": {
+    "name":"generatedapp"
+  },
+  "store": {
+	"protocol": "http",
+    "host": "localhost",
+    "port": "27017",
+    "name": "tanks"
+  },
+  "server": {
+    "protocol": "http",
+    "host": "localhost",
+	"port": "9999"
+  },
+  "objects": [
+    {
+      "name": "tank",
+      "props": {
+        "size": "Number"
+      }
+    }
+  ],
+  "components": [
+    {
+      "objectName": "tank",
+      "type": "form"
+    }
+  ]
+}
