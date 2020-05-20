@@ -9,12 +9,23 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "acorn": "^7.2.0",
+    "acorn-jsx": "^5.2.0",
     "command-line-args": "^5.1.1",
     "cors": "^2.8.5",
+    "escodegen": "^1.14.1",
+    "esprima": "^4.0.1",
     "express": "^4.17.1",
     "lodash": "^4.17.15",
     "mongoose": "^5.9.12",
     "shelljs": "^0.8.4",
     "write": "^2.0.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.9.6",
+    "@babel/generator": "^7.9.6",
+    "@babel/preset-env": "^7.9.6",
+    "@babel/preset-react": "^7.9.4",
+    "babel-generator": "^6.26.1"
   }
 }
