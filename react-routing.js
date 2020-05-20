@@ -3,8 +3,6 @@ const write = require('write');
 var shell = require('shelljs');
 const path = require('path');
 const fs = require('fs');
-var acorn = require("acorn");
-var jsx = require("acorn-jsx");
 const { default: generate } = require("@babel/generator");
 require("@babel/core").transform("code", {
 	presets: ["@babel/preset-react"],
