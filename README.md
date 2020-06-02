@@ -2,7 +2,7 @@
 
 Node application to generate a MERN stackf from an user-defined application properties.
 
-## What is does
+## What it does
 Frontend :
 
  - generates shared library to call backen API
