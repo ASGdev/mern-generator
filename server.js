@@ -13,7 +13,34 @@ exports.init = function (baseDir, defs) {
 	app.use(express.json())
 
 	const store = require('./store.js')
+	const auth = require('./auth.js')
 	`
+
+	// auth
+	defs.authorizations.forEach((method) => {
+		switch (method.type) {
+			case 'token':
+				file +=
+				`
+				app.use(async function (req, res, next) {
+					let token = req.body.apikey || req.query.api_key || null;
+					console.log('Req token :', token)
+					// also check http header for get
+					if(token === null){
+						res.status(401).json({"error":"Token not authorized"})
+					} else {
+						auth.checkKey(token).then(() => {
+							next()
+						}).catch((e) => {
+							res.status(401).json({"error":"Token not authorized"})
+						})
+					}
+				})
+				`
+
+				break;
+		}
+	})
 
 	// create endpoint for each object
 	defs.objects.forEach((obj) => {
