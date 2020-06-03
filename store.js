@@ -30,6 +30,55 @@ exports.init = function (baseDir, defs){
 		file += `\nvar ${_.capitalize(obj.name)} = mongoose.model('${_.capitalize(obj.name)}', ${_.capitalize(obj.name)}Schema);`
 	})
 
+	defs.authorizations.forEach((method) => {
+		switch (method.type) {
+			case 'token':
+				file += 
+				`
+				var AuthApiKeySchema = new mongoose.Schema({ apikey: String })
+				var AuthApiKey = mongoose.model('AuthApiKey', AuthApiKeySchema)
+
+				store.findKey = async function (key){
+					try {
+						let doc = await AuthApiKey.find({ apikey: key });
+						if(doc.length === 1){
+							if(doc[0].apikey == key){
+								return true;
+							} else {
+								return false;
+							}
+						} else {
+							return false
+						}
+						
+
+					} catch (err){
+						console.log(err)
+						return false
+					}
+				}
+
+				store.addKey = function(token){
+                    return new Promise((resolve, reject) => {
+						console.log("[Store] Adding token " + token)
+                        let o = new AuthApiKey();
+						o.apikey = token
+                        o.save(function (err) {
+                            if (err) {
+								console.log(err)
+                                reject(err)
+                            } else {
+                                resolve()
+                            }
+                        });
+                    });
+                }
+				`
+
+				break;
+		}
+	})
+
 	// create handlers
 	defs.objects.forEach((obj) => {
 		// insert

@@ -2,6 +2,7 @@ const commandLineArgs = require('command-line-args')
 var shell = require('shelljs');
 const path = require('path');
 const fs = require('fs');
+var childProcess = require("child_process");
 
 let baseDir = ""
 let defs = {}
@@ -15,6 +16,7 @@ const reactFormComponentGenerator = require('./react-component-form')
 
 const storeGenerator = require('./store')
 const serverGenerator = require('./server')
+const authGenerator = require('./auth')
 
 const optionDefinitions = [
 	{ name: 'def', alias:'d', type: String },
@@ -109,6 +111,15 @@ storeGenerator.init(backendAppBaseDir, defs)
 console.log("+ creating server file")
 serverGenerator.init(backendAppBaseDir, defs)
 
-console.log("==== FINISHED ====")
+console.log("+ creating auth file")
+authGenerator.init(backendAppBaseDir, defs)
 
-process.exit(0)
+console.log("+ postinstall")
+var cp = childProcess.fork(path.join(__dirname, "postinstall.js"), ["-d", options.def]);
+cp.on("exit", function (code, signal) {
+	console.log("Exited", { code: code, signal: signal });
+	console.log("==== FINISHED ====")
+	process.exit(0)
+
+});
+cp.on("error", console.error.bind(console));
