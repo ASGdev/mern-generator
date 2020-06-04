@@ -6,7 +6,7 @@
     "protocol": "http",
     "host": "localhost",
     "port": "27017",
-    "name": "files"
+    "name": "project"
   },
   "server": {
     "protocol": "http",
@@ -15,7 +15,7 @@
   },
   "objects": [
     {
-      "name": "file",
+      "name": "project",
       "props": {
         "name": "String",
         "creation": "Date",
