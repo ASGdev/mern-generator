@@ -96,6 +96,15 @@ function addRoutes(defs){
 		}
 	})
 
+	defs.authorizations.forEach((method) => {
+		if(method.type === "jwt"){
+			acc +=
+				`
+				<Route path="/login" children={ <LoginForm /> } />
+				`
+		}
+	})
+
 	return acc;
 }
 
@@ -111,6 +120,14 @@ function addMenu(defs) {
 			acc +=
 			`
 			<li><Link to="/${obj.name}/create">Create ${obj.name}</Link></li>`
+		}
+	})
+
+	defs.authorizations.forEach((method) => {
+		if (method.type === "jwt") {
+			acc +=
+				`
+				<li><Link to="/login">Login</Link></li>`
 		}
 	})
 

@@ -1,0 +1,48 @@
+{
+    "app": {
+        "name": "generatedapp"
+    },
+    "store": {
+        "protocol": "http",
+        "host": "localhost",
+        "port": "27017",
+        "name": "files"
+    },
+    "server": {
+        "protocol": "http",
+        "host": "localhost",
+        "port": "9999"
+    },
+    "objects": [
+        {
+            "name": "file",
+            "props": {
+                "name": "String",
+                "creation": "Date",
+                "md5sum": "String",
+                "sha1sum": "String",
+                "path": "String",
+                "size": "Number"
+            },
+            "generateForm": true
+        }
+    ],
+    "authorizations": [
+        {
+            "type": "token",
+            "tokens": [
+                "abcde123",
+                "auclairdelalune"
+            ]
+        },
+        {
+            "type": "jwt"
+        }
+    ],
+    "users": [
+        {
+            "name": "dev",
+            "password": "dev"
+        }
+    ]
+}

@@ -3,6 +3,7 @@ var shell = require('shelljs');
 const path = require('path');
 const fs = require('fs');
 var childProcess = require("child_process");
+const _ = require('lodash');
 
 let baseDir = ""
 let defs = {}
@@ -86,22 +87,29 @@ if (!options.update) {
 
 	console.log("+ installing cors for express")
 	if (shell.exec('npm i cors').code !== 0) {
-	shell.echo('Error: installing express failed');
+		shell.echo('Error: installing express failed');
 	}
 
 	if(options.db === "sql"){
 		console.log("+ installing sequelize")
 		if (shell.exec('npm i sequelize').code !== 0) {
-		shell.echo('Error: installing sequelize failed');
+			shell.echo('Error: installing sequelize failed');
 		}
 	} else if(options.db === "nosql"){
 		console.log("+ installing mongoose")
 		if (shell.exec('npm i mongoose').code !== 0) {
-		shell.echo('Error: installing mongoose failed');
+			shell.echo('Error: installing mongoose failed');
 		}
 
 	} else {
 		console.log("- no store installed");
+	}
+
+	if (_.findIndex(defs.authorizations, ['type', 'jwt']) !== -1){
+		console.log("+ installing dependencies for jwt auth")
+		if (shell.exec('npm i bcrypt passport jsonwebtoken passport-local passport-jwt').code !== 0) {
+			shell.echo('Error: installing dependencies failed');
+		}
 	}
 }
 

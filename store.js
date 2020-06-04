@@ -76,6 +76,63 @@ exports.init = function (baseDir, defs){
 				`
 
 				break;
+			case 'jwt':
+				console.log("selected jwt auth")
+				file += 
+				`
+				const UserSchema = new Schema({
+					username : {
+						type : String,
+						required : true,
+						unique : true
+					},
+					password : {
+						type : String,
+						required : true
+					}
+				});
+				var User = mongoose.model('User', UserSchema)
+
+				store.getUserPassword = async function (username){
+					try {
+						let doc = await User.find({ username });
+						if(doc.length === 1){
+							if(doc[0].username == username){
+								return doc[0].password
+							} else {
+								return ""
+							}
+						} else {
+							return ""
+						}
+						
+
+					} catch (err){
+						console.log(err)
+						return ""
+					}
+				}
+
+				store.findUser = async function (username){
+					try {
+						let doc = await User.find({ username });
+						if(doc.length === 1){
+							if(doc[0].username == username){
+								return doc[0]
+							} else {
+								return ""
+							}
+						} else {
+							return ""
+						}
+						
+
+					} catch (err){
+						console.log(err)
+						return ""
+					}
+				}
+				`
 		}
 	})
 
